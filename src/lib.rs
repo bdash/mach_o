@@ -109,7 +109,7 @@ impl<'a> Header<'a> {
         }
     }
 
-    /// TODO FITZGEN
+    /// Get the magic value for this header.
     pub fn magic(&self) -> u32 {
         unsafe {
             match self.raw_header {
