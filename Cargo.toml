@@ -1,11 +1,11 @@
 [package]
 authors = ["Nick Fitzgerald <fitzgen@gmail.com>"]
-name = "mach_o"
-version = "0.1.0"
 description = "A nicer API for working with OSX's mach-o system library (built on top of mach_o_sys)"
-license = "Apache-2.0/MIT"
 keywords = ["mach", "macho", "mach-o"]
+license = "Apache-2.0/MIT"
+name = "mach_o"
 repository = "https://github.com/fitzgen/mach_o"
+version = "0.1.0"
 
 [dependencies]
 mach_o_sys = "0.1.1"
