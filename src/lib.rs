@@ -78,6 +78,25 @@ impl<'a> Header<'a> {
         }
     }
 
+    /// Returns true if the object file is encoded with the same byteorder that
+    /// the current platform uses natively.
+    pub fn is_native_byteorder(&self) -> bool {
+        match self.magic() {
+            loader::MH_MAGIC |
+            loader::MH_MAGIC_64 => true,
+            _ => false,
+        }
+    }
+
+    /// Returns true if the object file is 64-bit, false if it is 32-bit.
+    pub fn is_64_bit(&self) -> bool {
+        match self.magic() {
+            loader::MH_MAGIC_64 |
+            loader::MH_CIGAM_64 => true,
+            _ => false,
+        }
+    }
+
     /// Get the data for a given section, if it exists.
     pub fn get_section(&self, segment_name: &CStr, section_name: &CStr) -> Option<Section<'a>> {
         unsafe {
