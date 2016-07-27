@@ -5,7 +5,7 @@ keywords = ["mach", "macho", "mach-o"]
 license = "Apache-2.0/MIT"
 name = "mach_o"
 repository = "https://github.com/fitzgen/mach_o"
-version = "0.1.0"
+version = "0.1.1"
 
 [dependencies]
 mach_o_sys = "0.1.1"
