@@ -107,15 +107,12 @@ impl<'a> Header<'a> {
                                                                    segment_name.as_ptr(),
                                                                    section_name.as_ptr());
 
-                    match section.as_ref() {
-                        None => None,
-                        Some(section) => {
-                            Some(Section {
-                                raw_section: RawSection::Section32(section),
-                                input: self.input,
-                            })
+                    section.as_ref().map(|section| {
+                        Section {
+                            raw_section: RawSection::Section32(section),
+                            input: self.input,
                         }
-                    }
+                    })
                 }
                 RawHeader::MachHeader64(h) => {
                     let h: *mut getsect::mach_header_64 = mem::transmute(h);
@@ -123,15 +120,12 @@ impl<'a> Header<'a> {
                                                                       segment_name.as_ptr(),
                                                                       section_name.as_ptr());
 
-                    match section.as_ref() {
-                        None => None,
-                        Some(section) => {
-                            Some(Section {
-                                raw_section: RawSection::Section64(section),
-                                input: self.input,
-                            })
+                    section.as_ref().map(|section| {
+                        Section {
+                            raw_section: RawSection::Section64(section),
+                            input: self.input,
                         }
-                    }
+                    })
                 }
             }
         }
