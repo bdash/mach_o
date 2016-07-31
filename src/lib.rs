@@ -103,17 +103,9 @@ impl<'a> Header<'a> {
             match self.raw_header {
                 RawHeader::MachHeader32(h) => {
                     let h: *mut getsect::mach_header = mem::transmute(h);
-                    let section = if self.magic() == loader::MH_MAGIC {
-                        getsect::getsectbynamefromheader(h,
-                                                         segment_name.as_ptr(),
-                                                         section_name.as_ptr())
-                    } else {
-                        assert_eq!(self.magic(), loader::MH_CIGAM);
-                        getsect::getsectbynamefromheaderwithswap(h,
-                                                                 segment_name.as_ptr(),
-                                                                 section_name.as_ptr(),
-                                                                 1)
-                    };
+                    let section = getsect::getsectbynamefromheader(h,
+                                                                   segment_name.as_ptr(),
+                                                                   section_name.as_ptr());
 
                     match section.as_ref() {
                         None => None,
@@ -127,19 +119,9 @@ impl<'a> Header<'a> {
                 }
                 RawHeader::MachHeader64(h) => {
                     let h: *mut getsect::mach_header_64 = mem::transmute(h);
-                    let section = if self.magic() == loader::MH_MAGIC_64 {
-                        getsect::getsectbynamefromheader_64(h,
-                                                            segment_name.as_ptr(),
-                                                            section_name.as_ptr())
-                    } else {
-                        assert_eq!(self.magic(), loader::MH_CIGAM_64);
-                        let section =
-                            getsect::getsectbynamefromheaderwithswap_64(h,
-                                                                        segment_name.as_ptr(),
-                                                                        section_name.as_ptr(),
-                                                                        1);
-                        mem::transmute(section)
-                    };
+                    let section = getsect::getsectbynamefromheader_64(h,
+                                                                      segment_name.as_ptr(),
+                                                                      section_name.as_ptr());
 
                     match section.as_ref() {
                         None => None,
