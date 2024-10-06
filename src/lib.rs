@@ -102,7 +102,6 @@ impl<'a> Header<'a> {
         unsafe {
             match self.raw_header {
                 RawHeader::MachHeader32(h) => {
-                    let h: *mut getsect::mach_header = mem::transmute(h);
                     let section = getsect::getsectbynamefromheader(h,
                                                                    segment_name.as_ptr(),
                                                                    section_name.as_ptr());
@@ -115,7 +114,6 @@ impl<'a> Header<'a> {
                     })
                 }
                 RawHeader::MachHeader64(h) => {
-                    let h: *mut getsect::mach_header_64 = mem::transmute(h);
                     let section = getsect::getsectbynamefromheader_64(h,
                                                                       segment_name.as_ptr(),
                                                                       section_name.as_ptr());
@@ -134,8 +132,8 @@ impl<'a> Header<'a> {
 
 #[derive(Copy, Clone, Debug)]
 enum RawSection {
-    Section32(*const getsect::section),
-    Section64(*const getsect::section_64),
+    Section32(*const loader::section),
+    Section64(*const loader::section_64),
 }
 
 /// A section in the mach-o file.
